@@ -8,7 +8,7 @@ class QuoteProtocol(protocol.Protocol):
         self.sendQuote()
 
     def sendQuote(self):
-        self.transport.write(self.factory.quote)
+        self.transport.write(str.encode(self.factory.quote))
 
     def dataReceived(self, data):
         print("Received quote:", data)
