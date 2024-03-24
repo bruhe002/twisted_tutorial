@@ -10,7 +10,7 @@ class QuoteProtocol(protocol.Protocol):
 
     def dataReceived(self, data):
         print("Number of connections: %d" % (self.factory.numConnections))
-        print("> Received: \"%s\"\n> Sending: \"%s\"" % (data, self.getQuote()))
+        print("> Received: \"%s\"\n> Sending: \"%s\"" % (data.decode(), self.getQuote().decode()))
         self.transport.write(self.getQuote())
         self.updateQuote(data)
 
@@ -27,7 +27,10 @@ class QuoteFactory(Factory):
     numConnections = 0
 
     def __init__(self, quote=None):
-        self.quote = quote or "An apple a day keeps the doctor away"
+        if quote is not None:
+            quote = str.encode(quote)
+        self.quote = quote or str.encode("An apple a day keeps the doctor away")
+
 
     def buildProtocol(self, addr):
         return QuoteProtocol(self)

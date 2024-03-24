@@ -8,15 +8,15 @@ class QuoteProtocol(protocol.Protocol):
         self.sendQuote()
 
     def sendQuote(self):
-        self.transport.write(str.encode(self.factory.quote))
+        self.transport.write(self.factory.quote)
 
     def dataReceived(self, data):
-        print("Received quote:", data)
+        print("Received quote:", data.decode())
         self.transport.loseConnection()
 
 class QuoteClientFactory(protocol.ClientFactory):
     def __init__(self, quote):
-        self.quote = quote
+        self.quote = str.encode(quote)
 
     def buildProtocol(self, addr):
         return QuoteProtocol(self)
