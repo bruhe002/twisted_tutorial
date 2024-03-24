@@ -22,3 +22,15 @@ class QuoteProtocol(protocol.Protocol):
     
     def updateQuote(self, quote):
         self.factory.quote = quote
+
+class QuoteFactory(Factory):
+    numConnections = 0
+
+    def __init__(self, quote=None):
+        self.quote = quote or "An apple a day keeps the doctor away"
+
+    def buildProtocol(self, addr):
+        return QuoteProtocol(self)
+    
+reactor.listenTcp(8000, QuoteFactory())
+reactor.run()
