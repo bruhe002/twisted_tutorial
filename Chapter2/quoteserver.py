@@ -13,3 +13,12 @@ class QuoteProtocol(protocol.Protocol):
         print("> Received: \"%s\"\n> Sending: \"%s\"" % (data, self.getQuote()))
         self.transport.write(self.getQuote())
         self.updateQuote(data)
+
+    def connectionLost(self, reason):
+        self.factory.numConnections -= 1
+
+    def getQuote(self):
+        return self.factory.quote
+    
+    def updateQuote(self, quote):
+        self.factory.quote = quote
