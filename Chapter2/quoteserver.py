@@ -32,5 +32,5 @@ class QuoteFactory(Factory):
     def buildProtocol(self, addr):
         return QuoteProtocol(self)
     
-reactor.listenTcp(8000, QuoteFactory())
+reactor.listenTCP(8000, QuoteFactory())
 reactor.run()
