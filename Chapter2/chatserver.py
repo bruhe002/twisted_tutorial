@@ -42,3 +42,12 @@ class ChatProtocol(LineReceiver):
             if protocol != self:
                 protocol.sendLine(message)
 
+class ChatFactory(Factory):
+    def __init__(self):
+        self.users = {}
+
+    def buildProtocol(self, addr):
+        return ChatProtocol(self)
+    
+reactor.listenTCP(8000, ChatFactory())
+reactor.run()
