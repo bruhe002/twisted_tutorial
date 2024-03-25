@@ -9,7 +9,7 @@ class ChatProtocol(LineReceiver):
         self.state = "REGISTER"
 
     def connectionMade(self):
-        self.sendLine("What's your name?")
+        self.sendLine(str.encode("What's your name?"))
 
     def connectionLost(self, reason):
         if self.name in self.factory.users:
@@ -24,23 +24,23 @@ class ChatProtocol(LineReceiver):
 
     def handle_REGISTER(self, name):
         if name in self.factory.users:
-            self.sendLine("Name take, please choose another.")
+            self.sendLine("Name taken, please choose another.")
             return
         
-        self.sendLine("Welcome, %s!" % (name))
-        self.broadcastMessage("%s has joined the channel. " % (name))
+        self.sendLine(str.encode("Welcome, %s!" % (name.decode())))
+        self.broadcastMessage("%s has joined the channel. " % (name.decode()))
         self.name = name
         self.factory.users[name] = self
         self.state = "CHAT"
 
     def handle_CHAT(self, message):
-        message = "<%s> %s" % (self.name, message)
+        message = "<%s> %s" % (self.name.decode(), message.decode())
         self.broadcastMessage(message)
 
     def broadcastMessage(self, message):
-        for name, protocol in self.factory.users.iteritems():
+        for name, protocol in self.factory.users.items():
             if protocol != self:
-                protocol.sendLine(message)
+                protocol.sendLine(str.encode(message))
 
 class ChatFactory(Factory):
     def __init__(self):
