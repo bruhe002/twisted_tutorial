@@ -12,7 +12,7 @@ class HTTPEchoProtocol(basic.LineReceiver):
 
     def lineReceived(self, line):
         # Add Line to self.lines
-        self.lines.append(line)
+        self.lines.append(line.decode())
         # If no lines left, send response
         if not line:
             self.sendResponse()
