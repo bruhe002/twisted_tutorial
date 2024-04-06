@@ -8,7 +8,7 @@ from twisted.internet import reactor
 from twisted.web.server import Site
 from twisted.web.static import File
 
-resource = File("~/Documents/cpp_practice")
+resource = File("/c/Users/bruhe/Documents/twisted_tutorial")
 factory = Site(resource)
 
 reactor.listenTCP(8000, factory)
