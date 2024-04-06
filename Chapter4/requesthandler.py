@@ -13,11 +13,11 @@ class MyRequestHandler(http.Request):
 
     def process(self):
         self.setHeader('Content-Type', 'text/html')
-        if self.resources.has_key(self.path):
-            self.write(self.resources[self.path])
+        if self.path.decode() in self.resources.keys():
+            self.write(str.encode(self.resources[self.path.decode()]))
         else:
             self.setResponseCode(http.NOT_FOUND)
-            self.write("<h1>Not Found</h1>Sorry no such resource")
+            self.write(str.encode("<h1>Not Found</h1>Sorry no such resource"))
         self.finish()
 
 class MyHTTP(http.HTTPChannel):
