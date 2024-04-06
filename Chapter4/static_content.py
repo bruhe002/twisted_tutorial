@@ -4,12 +4,13 @@
     a local directory
 '''
 
-from twisted.internet import reactor
+from twisted.internet import reactor, endpoints
 from twisted.web.server import Site
 from twisted.web.static import File
 
-resource = File('/c/Users/bruhe/Documents/twisted_tutorial/Chapter4/resources')
+resource = File('./resources')
 factory = Site(resource)
 
-reactor.listenTCP(8000, factory)
+endpoint = endpoints.TCP4ServerEndpoint(reactor, 8000)
+endpoint.listen(factory)
 reactor.run()
