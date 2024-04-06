@@ -3,7 +3,8 @@
 '''
 
 from twisted.internet import reactor
-from twisted.web.resource import Resource, NoResource
+from twisted.web.resource import Resource
+from twisted.web.pages import notFound
 from twisted.web.server import Site
 
 from calendar import calendar
@@ -14,7 +15,7 @@ class YearPage(Resource):
         self.year = year
 
     def render_GET(self, request):
-        return '<html><body><pre>%s</pre></body></html>' % (calendar(self.year),)
+        return str.encode('<html><body><pre>%s</pre></body></html>' % (calendar(self.year),))
     
 class CalendarHome(Resource):
     def getChild(self, name, request):
@@ -23,10 +24,10 @@ class CalendarHome(Resource):
         if name.isdigit():
             return YearPage(int(name))
         else:
-            return NoResource
+            return notFound()
         
     def render_GET(self, request):
-        return "<html><body>Welcome to the calendar server!</body></html>"
+        return str.encode("<html><body>Welcome to the calendar server!</body></html>")
     
 root = CalendarHome()
 factory = Site(root)

@@ -11,7 +11,7 @@ import time
 class ClockPage(Resource):
     isLeaf = True
     def render_GET(self, request):
-        return "The local time is %s" % (time.ctime(),)
+        return str.encode("The local time is %s" % (time.ctime(),))
     
 resource = ClockPage()
 factory = Site(resource)
