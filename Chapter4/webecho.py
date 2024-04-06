@@ -18,10 +18,10 @@ class HTTPEchoProtocol(basic.LineReceiver):
             self.sendResponse()
 
     def sendResponse(self):
-        self.sendLine("HTTP/1.1 200 OK")
-        self.sendLine("")
+        self.sendLine(str.encode("HTTP/1.1 200 OK"))
+        self.sendLine(str.encode(""))
         responseBody = "You said:\r\n\r\n" + "\r\n".join(self.lines)
-        self.transport.write(responseBody)
+        self.transport.write(str.encode(responseBody))
         self.transport.loseConnection()
 
 class HTTPEchoFactory(protocol.ServerFactory):
