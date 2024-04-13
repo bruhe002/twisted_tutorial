@@ -30,7 +30,7 @@ agent = Agent(reactor)
 headers = Headers({'User-Agent' : ['Twisted WebBot'],
                    'Content-Type' : ['text/x-greeting']})
 
-d = agent.request('HEAD', sys.argv[1], headers=headers)
+d = agent.request(b'HEAD', str.encode(sys.argv[1]), headers=headers)
 d.addCallbacks(printHeaders, printError)
 d.addBoth(stop)
 
