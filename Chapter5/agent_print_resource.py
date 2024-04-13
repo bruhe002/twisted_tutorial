@@ -32,11 +32,11 @@ def stop(result):
     reactor.stop()
 
 if len(sys.argv) != 2:
-    print(sys.stderr, "Usage: python agent_print_resources.py <URL>")
+    print(sys.stderr, b"Usage: python agent_print_resources.py <URL>")
     exit(1)
 
 agent = Agent(reactor)
-d = agent.request("GET", sys.argv[1])
+d = agent.request(b"GET", str.encode(sys.argv[1]))
 d.addCallbacks(printResource, printError)
 d.addBoth(stop)
 
