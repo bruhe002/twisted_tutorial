@@ -1,8 +1,10 @@
 '''
-    Shows the advantages of getPage
+    Shows the advantages of getPage*
+
+    *Deprecated in newer versions of Twisted
 '''
 from twisted.internet import reactor
-from twisted.web.client import getPage
+from twisted.web.client import downloadPage
 import sys
 
 # callbacks for the deferred object
