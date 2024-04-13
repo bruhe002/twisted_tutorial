@@ -52,12 +52,13 @@ def stop(failure):
     reactor.stop()
 
 if len(sys.argv) != 3:
-    print(sys.stderr, "Usage: python post_resource.py <URL> 'POST DATA")
+    print(len(sys.argv))
+    print(sys.stderr, "Usage: python post_resource.py <URL> 'POST DATA'")
     exit(1)
 
 agent = Agent(reactor)
-body = StringProducer(sys.argv[2])
-d = agent.request('POST', sys.argv[1], bodyProducer=body)
+body = StringProducer(str.encode(sys.argv[2]))
+d = agent.request(b'POST', str.encode(sys.argv[1]), bodyProducer=body)
 d.addCallbacks(printResource, printError)
 d.addBoth(stop)
 
